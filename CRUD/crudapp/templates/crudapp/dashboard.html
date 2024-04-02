@@ -24,22 +24,22 @@
         </thead>
     
         <tbody> 
-            {% if hydroponic_systems %}
-                {% for system in hydroponic_systems %}
+            {% if data %}
+                {% for system in data %}
                     <tr>
-                        <td>{{system.id}}</td>
-                        <td>{{system.name}}</td>
-                        <td>{{system.ph}}</td>
-                        <td>{{system.water_temperature}}</td>
-                        <td>{{system.TDS}}</td>
-                        <td>{{system.description}}</td>
-                        <td>{{system.created_at}}</td>
+                        <td>{{system.0}}</td>
+                        <td>{{system.1}}</td>
+                        <td>{{system.2}}</td>
+                        <td>{{system.3}}</td>
+                        <td>{{system.4}}</td>
+                        <td>{{system.5}}</td>
+                        <td>{{system.6}}</td>
 
                     
                         <td>
-                            <a class="btn btn-primary btn-sm" href="{% url 'view' system.id %}">View</a>
-                            <a class="btn btn-warning btn-sm" href="{% url 'update' system.id %}">Update</a>
-                            <a class="btn btn-danger btn-sm" href="{% url 'delete' system.id %}">Delete</a>
+                            <a class="btn btn-primary btn-sm" href="{% url 'view' system.0 %}">View</a>
+                            <a class="btn btn-warning btn-sm" href="{% url 'update' system.0 %}">Update</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'delete' system.0 %}">Delete</a>
                         </td> 
                     </tr>
                 {% endfor %}

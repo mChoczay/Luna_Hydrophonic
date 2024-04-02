@@ -28,7 +28,6 @@ class LoginForm(AuthenticationForm):
     
 
 class AddSystemForm(forms.ModelForm):
-
     class Meta:
         model = HydroponicSystem
         fields = ["name", "description", "ph", "water_temperature", "TDS"] #TODO swap to take data from db for ph, water_temperature, TDS
