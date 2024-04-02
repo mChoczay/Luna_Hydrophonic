@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm, LoginForm
 
 
@@ -42,10 +43,19 @@ def login(request):
 
             if user is not None:
                 auth.login(request, user)
-                return redirect("")
+                return redirect("dashboard")
 
     context = {"login_form": form}
     return render(request, "crudapp/login.html", context=context)
+
+
+# - Dashboard (visible only for logged in usres)
+
+@login_required(login_url="login")
+def dashboard(request):
+
+    return render(request, "crudapp/dashboard.html")
+
 
 def logout(request):
     auth.logout(request)
