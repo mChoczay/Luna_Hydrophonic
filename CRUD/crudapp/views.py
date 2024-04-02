@@ -4,7 +4,19 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm, LoginForm, AddSystemForm, UpdateSystemForm
 from .models import HydroponicSystem
+import psycopg2
 
+
+
+def db_connection():
+    conn = psycopg2.connect(
+        host="localhost",
+        database="mydatabase",
+        user="postgres",
+        password="test1234TEST!@#$"
+    )
+
+    return conn
 
 def home(request):
 
@@ -61,9 +73,14 @@ def login(request):
 @login_required(login_url="login")
 def dashboard(request):
 
-    hydroponic_system = HydroponicSystem.objects.all()
-
-    context = {"hydroponic_systems": hydroponic_system}
+    user_id = request.user.id
+    conn = db_connection()
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM crudapp_hydroponicsystem WHERE user_id = {user_id}')
+    rows = cur.fetchall()
+    context = {"data": rows}
+    cur.close()
+    conn.close()
 
     return render(request, "crudapp/dashboard.html", context=context)
 
@@ -73,15 +90,28 @@ def dashboard(request):
 
 @login_required(login_url="login")
 def add_system(request):
+    user_id = int(request.user.id)
+    conn = db_connection()
+    cur = conn.cursor()
 
     form = AddSystemForm()
-
+    print("asdasdasdasd")
     if request.method == "POST":
         form = AddSystemForm(request.POST)
+        print("!", user_id)
 
         if form.is_valid():
             form.save()
 
+            query = f"""
+            UPDATE crudapp_hydroponicsystem
+            SET user_id = {user_id}
+            WHERE id = ( SELECT id FROM crudapp_hydroponicsystem ORDER BY created_at DESC LIMIT 1)
+            """
+            cur.execute(query)
+            conn.commit()
+            cur.close()
+            conn.close()
             return redirect("dashboard")
 
     context = {"add_system_form": form}
@@ -117,9 +147,19 @@ def update_system(request, pk):
 
 @login_required(login_url="login")
 def view_system(request, pk):
-
-    all_systems = HydroponicSystem.objects.get(id=pk)
-    context = {"system": all_systems}
+    user_id = request.user.id
+    conn = db_connection()
+    cur = conn.cursor()
+    query = f"""SELECT created_at, ph, water_temperature, "TDS" 
+                FROM crudapp_hydroponicsystem 
+                WHERE user_id = {user_id} AND id = {pk}
+                ORDER BY created_at DESC
+                LIMIT 10"""
+    cur.execute(query)
+    rows = cur.fetchall()
+    context = {"data": rows}
+    cur.close()
+    conn.close()
 
     return render(request, "crudapp/view.html", context=context)
 
