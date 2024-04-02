@@ -1,0 +1,21 @@
+{% extends 'crudapp/base.html'%}
+
+{% block content %}
+    <body>
+        <div class='card'>
+            <div class='card-body'>
+                <p> <strong> Name: </strong> {{ system.name }} </p>
+                <p> <strong> pH: </strong> {{ system.ph }} </p>
+                <p> <strong> Water temperature: </strong> {{ system.water_temperature }} </p>
+                <p> <strong> TDS: </strong> {{ system.TDS }} </p>
+            </div>
+        </div>
+        <br>
+        <a href="{% url 'dashboard' %}" class='btn btn-secondary'> Return </a>
+        &nbsp;
+
+    </body>
+
+
+
+{% endblock %}
