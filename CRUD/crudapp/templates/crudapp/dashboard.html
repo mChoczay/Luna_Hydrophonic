@@ -39,7 +39,7 @@
                         <td>
                             <a class="btn btn-primary btn-sm" href="{% url 'view' system.id %}">View</a>
                             <a class="btn btn-warning btn-sm" href="{% url 'update' system.id %}">Update</a>
-                            {% comment %} <a class="btn btn-danger btn-sm" href="{% url 'system_delete' system.id %}">Delete</a> {% endcomment %}
+                            <a class="btn btn-danger btn-sm" href="{% url 'delete' system.id %}">Delete</a>
                         </td> 
                     </tr>
                 {% endfor %}

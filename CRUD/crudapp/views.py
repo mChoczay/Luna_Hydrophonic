@@ -111,13 +111,30 @@ def update_system(request, pk):
 
     return render(request, "crudapp/update.html", context=context)
 
+
+# - View details of a system
+
+
 @login_required(login_url="login")
 def view_system(request, pk):
-    
+
     all_systems = HydroponicSystem.objects.get(id=pk)
     context = {"system": all_systems}
 
     return render(request, "crudapp/view.html", context=context)
+
+
+# - Delete existing system
+
+
+@login_required(login_url="login")
+def delete_system(request, pk):
+
+    system = HydroponicSystem.objects.get(id=pk)
+
+    system.delete()
+
+    return redirect("dashboard")
 
 
 def logout(request):
