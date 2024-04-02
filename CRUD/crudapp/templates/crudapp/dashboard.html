@@ -1,0 +1,55 @@
+{% extends 'crudapp/base.html'%}
+
+{% block content %}
+
+    <h1> Hydroponic Systems, {{user}} </h1>
+    <hr>
+
+    <a class="btn btn-primary btn-sm" href="{% url 'dashboard' %}">Add new system</a>
+    <hr>
+
+
+    <table class="table table-hover table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">System Name</th>
+                <th scope="col">PH</th>
+                <th scope="col">Water Temperature</th>
+                <th scope="col">TDS</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+    
+        <tbody> 
+            {% if hydroponic_systems %}
+                {% for system in hydroponic_systems %}
+                    <tr>
+                        <td>{{system.id}}</td>
+                        <td>{{system.name}}</td>
+                        <td>{{system.ph}}</td>
+                        <td>{{system.water_temperature}}</td>
+                        <td>{{system.TDS}}</td>
+                        <td>{{system.description}}</td>
+                        <td>{{system.created_at}}</td>
+
+                    
+                        {% comment %} <td>
+                            <a class="btn btn-primary btn-sm" href="{% url 'system_detail' system.id %}">View</a>
+                            <a class="btn btn-warning btn-sm" href="{% url 'system_update' system.id %}">Update</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'system_delete' system.id %}">Delete</a>
+                        </td> {% endcomment %}
+                    </tr>
+                {% endfor %}
+            {% endif %}        
+
+        </tbody>
+
+        </table>
+
+{% endblock %}
+
+
+
