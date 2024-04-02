@@ -36,11 +36,11 @@
                         <td>{{system.created_at}}</td>
 
                     
-                        {% comment %} <td>
-                            <a class="btn btn-primary btn-sm" href="{% url 'system_detail' system.id %}">View</a>
-                            <a class="btn btn-warning btn-sm" href="{% url 'system_update' system.id %}">Update</a>
-                            <a class="btn btn-danger btn-sm" href="{% url 'system_delete' system.id %}">Delete</a>
-                        </td> {% endcomment %}
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="{% url 'view' system.id %}">View</a>
+                            <a class="btn btn-warning btn-sm" href="{% url 'update' system.id %}">Update</a>
+                            {% comment %} <a class="btn btn-danger btn-sm" href="{% url 'system_delete' system.id %}">Delete</a> {% endcomment %}
+                        </td> 
                     </tr>
                 {% endfor %}
             {% endif %}        
