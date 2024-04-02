@@ -14,6 +14,7 @@ urlpatterns = [
     path('create', views.add_system, name="create"),
     path('update/<int:pk>', views.update_system, name="update"),
     path('system/<int:pk>', views.view_system, name="view"),
+    path('delete/<int:pk>', views.delete_system, name="delete"),
 
 
 ]
