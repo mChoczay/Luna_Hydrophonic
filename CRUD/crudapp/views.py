@@ -6,8 +6,6 @@ from .forms import CreateUserForm, LoginForm, AddSystemForm, UpdateSystemForm
 from .models import HydroponicSystem
 import psycopg2
 
-
-
 def db_connection():
     conn = psycopg2.connect(
         host="localhost",
@@ -21,7 +19,6 @@ def db_connection():
 def home(request):
 
     return render(request, "crudapp/index.html")
-
 
 # - Register user
 
@@ -95,10 +92,8 @@ def add_system(request):
     cur = conn.cursor()
 
     form = AddSystemForm()
-    print("asdasdasdasd")
     if request.method == "POST":
         form = AddSystemForm(request.POST)
-        print("!", user_id)
 
         if form.is_valid():
             form.save()
@@ -110,6 +105,14 @@ def add_system(request):
             """
             cur.execute(query)
             conn.commit()
+
+            query = f"""
+            INSERT INTO sensors (user_id, system_id, ph, water_temperature, TDS)
+            VALUES ({user_id}, ( SELECT id FROM crudapp_hydroponicsystem ORDER BY created_at DESC LIMIT 1), {form.cleaned_data['ph']}, {form.cleaned_data['water_temperature']}, {form.cleaned_data['TDS']})
+            """
+            cur.execute(query)
+            conn.commit()
+            
             cur.close()
             conn.close()
             return redirect("dashboard")
@@ -126,8 +129,13 @@ def add_system(request):
 def update_system(request, pk):
 
     system = HydroponicSystem.objects.get(id=pk)
-
     form = UpdateSystemForm(instance=system)
+
+    print(pk)
+
+    user_id = int(request.user.id)
+    conn = db_connection()
+    cur = conn.cursor()
 
     if request.method == "POST":
         form = UpdateSystemForm(request.POST, instance=system)
@@ -135,6 +143,14 @@ def update_system(request, pk):
         if form.is_valid():
             form.save()
 
+            query = f"""
+            INSERT INTO sensors (user_id, system_id, ph, water_temperature, TDS)
+            VALUES ({user_id}, {pk}, {system.ph}, {system.water_temperature}, {system.TDS}) 
+            """
+            cur.execute(query)
+            conn.commit()
+            cur.close()
+            conn.close()
             return redirect("dashboard")
 
     context = {"update_system_form": form}
@@ -150,9 +166,9 @@ def view_system(request, pk):
     user_id = request.user.id
     conn = db_connection()
     cur = conn.cursor()
-    query = f"""SELECT created_at, ph, water_temperature, "TDS" 
-                FROM crudapp_hydroponicsystem 
-                WHERE user_id = {user_id} AND id = {pk}
+    query = f"""SELECT created_at, ph, water_temperature, TDS
+                FROM sensors 
+                WHERE user_id = {user_id} AND system_id = {pk}
                 ORDER BY created_at DESC
                 LIMIT 10"""
     cur.execute(query)
