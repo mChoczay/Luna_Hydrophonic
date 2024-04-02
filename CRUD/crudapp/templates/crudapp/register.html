@@ -1,14 +1,16 @@
 {% extends "crudapp/base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
     <body>
-        <div class = "container bg-light shadow-md p-5">
+        <div class = "container bg-light shadow-md p-5 form-layout">
             <h1 class = "text-center">Create your account</h1>
             <hr>
             <br>
             <form method="POST" autcomplete="off">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{form|crispy}}
                 <br>
                 <button type="submit" class="btn btn-primary w-100 btn-block p-2"> Create Account </button>
             </form>
