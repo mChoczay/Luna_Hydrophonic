@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm, LoginForm
+from .models import HydroponicSystem
 
 
 def home(request):
@@ -51,10 +52,15 @@ def login(request):
 
 # - Dashboard (visible only for logged in usres)
 
+
 @login_required(login_url="login")
 def dashboard(request):
 
-    return render(request, "crudapp/dashboard.html")
+    hydroponic_system = HydroponicSystem.objects.all()
+
+    context = {"hydroponic_systems": hydroponic_system}
+
+    return render(request, "crudapp/dashboard.html", context=context)
 
 
 def logout(request):
