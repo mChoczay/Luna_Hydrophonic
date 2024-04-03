@@ -40,9 +40,7 @@ create table sensors (
 ### Endpoints
 
 <ul>
-    <h5> /sensor_simulator </h5>
-    <h6> Simulates a sensor reading and updates the database with the sensor data. </h6>
-    <h5> /home </h5>
+    <h5> / </h5>
     <h6> Renders the home page. </h6>
     <h5> /register </h5>
     <h6> Registers a new user. </h6>
@@ -50,14 +48,16 @@ create table sensors (
     <h6> Logs in a user.  </h6>
     <h5> /dashboard </h5>
     <h6> Renders the dashboard page. </h6>
-    <h5> /add_system </h5>
+    <h5> /create </h5>
     <h6> Creates a new hydroponic system. </h6>
-    <h5> /update_system </h5>
+    <h5> /update/<int:pk> </h5>
     <h6> Updates an existing hydroponic system. </h6>
-    <h5> /view_system </h5>
+    <h5> /system/<int:pk> </h5>
     <h6> Renders the details of a hydroponic system. </h6>
-    <h5> /delete_system </h5>
+    <h5> /delete/<int:pk> </h5>
     <h6> Deletes an existing hydroponic system. </h6>
     <h5> /logout </h5>
     <h6> Logs out the current user. </h6>
+    <h5> /stream </h5>
+    <h6> Simulates a sensor reading and updates the database with the sensor data. </h6>
 </ul>
