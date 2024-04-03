@@ -40,21 +40,22 @@ create table sensors (
 ### Endpoints
 
 <ul>
+    <h5> Green endpoints are login required </h5>
     <h5> / </h5>
     <h6> Renders the home page. </h6>
     <h5> /register </h5>
     <h6> Registers a new user. </h6>
     <h5> /login </h5>
     <h6> Logs in a user.  </h6>
-    <h5> /dashboard </h5>
+    <h5 style="color:MediumSeaGreen;"> /dashboard </h5>
     <h6> Renders the dashboard page. </h6>
-    <h5> /create </h5>
+    <h5 style="color:MediumSeaGreen;"> /create </h5>
     <h6> Creates a new hydroponic system. </h6>
-    <h5> /update/pk </h5>
+    <h5 style="color:MediumSeaGreen;"> /update/pk </h5>
     <h6> Updates an existing hydroponic system. </h6>
-    <h5> /system/pk </h5>
+    <h5 style="color:MediumSeaGreen;"> /system/pk </h5>
     <h6> Renders the details of a hydroponic system. </h6>
-    <h5> /delete/pk </h5>
+    <h5 style="color:MediumSeaGreen;"> /delete/pk </h5>
     <h6> Deletes an existing hydroponic system. </h6>
     <h5> /logout </h5>
     <h6> Logs out the current user. </h6>
