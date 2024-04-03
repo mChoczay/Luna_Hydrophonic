@@ -22,7 +22,7 @@ In <i> settings.py </i> fill required fields
         'NAME': 'your-database-name',
         'USER': 'your-user-name',
         'PASSWORD': 'your-password',
-        'HOST': 'your-localhost',
+        'HOST': 'localhost',
         'PORT': '5432',
 ```
 Also add a new table to your db using this script
