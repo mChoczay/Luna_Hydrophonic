@@ -50,11 +50,11 @@ create table sensors (
     <h6> Renders the dashboard page. </h6>
     <h5> /create </h5>
     <h6> Creates a new hydroponic system. </h6>
-    <h5> /update/<int:pk> </h5>
+    <h5> /update/pk </h5>
     <h6> Updates an existing hydroponic system. </h6>
-    <h5> /system/<int:pk> </h5>
+    <h5> /system/pk </h5>
     <h6> Renders the details of a hydroponic system. </h6>
-    <h5> /delete/<int:pk> </h5>
+    <h5> /delete/pk </h5>
     <h6> Deletes an existing hydroponic system. </h6>
     <h5> /logout </h5>
     <h6> Logs out the current user. </h6>
