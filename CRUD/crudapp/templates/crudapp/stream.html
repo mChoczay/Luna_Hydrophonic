@@ -1,0 +1,30 @@
+{% extends "crudapp/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="system">Select System:</label>
+            <select class="form-control" id="system" name="system">
+                {% for system in data %}
+                    <option value="{{ system.id }}">Id: {{ system.id }} Name: {{ system.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ph">pH:</label>
+            <input type="text" class="form-control" id="ph" name="ph">
+        </div>
+        <div class="form-group">
+            <label for="water_temperature">Water Temperature:</label>
+            <input type="text" class="form-control" id="water_temperature" name="water_temperature">
+        </div>
+        <div class="form-group">
+            <label for="tds">TDS:</label>
+            <input type="text" class="form-control" id="tds" name="tds">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

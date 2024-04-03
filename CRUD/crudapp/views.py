@@ -27,52 +27,43 @@ def db_connection():
     return conn
 
 # - Stream
+def sensor_simulator(request):
+    all_systems = HydroponicSystem.objects.all()
+    context = {"data": all_systems}
 
-def listener(request):
-    if request.method == 'POST':
-        user_id = request.POST.get('user_id')
-        system_id = request.POST.get('system_id')
-        ph = request.POST.get('ph')
-        water_temperature = request.POST.get('water_temperature')
-        TDS = request.POST.get('TDS')
-
-        if None in (user_id, system_id):
-            return JsonResponse({'error': 'Missing required parameters'}, status=400)
-
+    if request.method == "POST":
+        # Get data from form
+        system_id = request.POST.get("system")
+        # if not system_id:
+        #     return JsonResponse({"error": "System ID is required"})
+        
+        ph = request.POST.get("ph", 0)
+        water_temperature = request.POST.get("water_temperature", 0)
+        TDS = request.POST.get("TDS", 0)
+        print(system_id)
         conn = db_connection()
         cur = conn.cursor()
+        query = f"""
+        INSERT INTO sensors (user_id, system_id, ph, water_temperature, TDS)
+        VALUES ((SELECT user_id FROM crudapp_hydroponicsystem WHERE id = {system_id}), {system_id}, {ph}, {water_temperature}, {TDS})
+        """
+        cur.execute(query)
+        conn.commit()
 
-        if not ph:
-            query = f"""
-                        INSERT INTO sensors (user_id, system_id, ph, water_temperature, TDS)
-                        VALUES ({user_id},{system_id}, (SELECT ph FROM crudapp_hydroponicsystem WHERE user_id = {user_id} AND system_id = {system_id}) , {water_temperature} , {TDS} )
-                        """
-        elif not water_temperature:
-            query = f"""
-                        INSERT INTO sensors (user_id, system_id, ph, water_temperature, TDS)
-                        VALUES ({user_id},{system_id}, {ph}, (SELECT water_temperature FROM crudapp_hydroponicsystem WHERE user_id = {user_id} AND system_id = {system_id}) , {TDS} )
-                        """
-        elif not TDS:  
-            query = f"""
-                        INSERT INTO sensors (user_id, system_id, ph, water_temperature, TDS)
-                        VALUES ({user_id},{system_id}, {ph}, {water_temperature}, (SELECT TDS FROM crudapp_hydroponicsystem WHERE user_id = {user_id} AND system_id = {system_id}) )
-                        """
-        else:  
-            query = f"""
-                        INSERT INTO sensors (user_id, system_id, ph, water_temperature, TDS)
-                        VALUES ({user_id},{system_id}, {ph}, {water_temperature}, {TDS} )
-                        """
-        try:
-            cur.execute(query)
-            conn.commit()
-            return JsonResponse({'message': 'Data inserted successfully'})
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-        finally:
-            cur.close()
-            conn.close()
-    else:
-        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+        query = f"""
+            UPDATE crudapp_hydroponicsystem
+            SET ph={ph}, water_temperature={water_temperature}, "TDS"={TDS}
+            WHERE id = {system_id}
+            """
+        cur.execute(query)
+        conn.commit()
+
+
+        cur.close()
+        conn.close()
+        return redirect("stream")
+  
+    return render(request, "crudapp/stream.html", context=context)
 
 # - Home page
     
@@ -191,8 +182,6 @@ def update_system(request, pk):
 
     system = HydroponicSystem.objects.get(id=pk)
     form = UpdateSystemForm(instance=system)
-
-    print(pk)
 
     user_id = int(request.user.id)
     conn = db_connection()
