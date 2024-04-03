@@ -39,28 +39,27 @@ create table sensors (
 
 ### Endpoints
 
-```diff
+
 <ul>
-    <h5> Green endpoints are login required </h5>
+    <h5> Endpoints with <b>*</b> are login required </h5>
     <h5> / </h5>
     <h6> Renders the home page. </h6>
     <h5> /register </h5>
     <h6> Registers a new user. </h6>
     <h5> /login </h5>
     <h6> Logs in a user.  </h6>
-    + <h5> /dashboard </h5> 
+    <h5> /dashboard  <b>*</b></h5> 
     <h6> Renders the dashboard page. </h6>
-    + <h5> /create </h5> 
+    <h5> /create  <b>*</b> </h5> 
     <h6> Creates a new hydroponic system. </h6>
-    + <h5> /update/pk </h5> 
+    <h5> /update/pk  <b>*</b> </h5> 
     <h6> Updates an existing hydroponic system. </h6>
-    + <h5> /system/pk </h5> 
+    <h5> /system/pk  <b>*</b> </h5> 
     <h6> Renders the details of a hydroponic system. </h6>
-    + <h5> /delete/pk </h5> 
+    <h5> /delete/pk  <b>*</b> </h5> 
     <h6> Deletes an existing hydroponic system. </h6>
     <h5> /logout </h5>
     <h6> Logs out the current user. </h6>
     <h5> /stream </h5>
     <h6> Simulates a sensor reading and updates the database with the sensor data. </h6>
 </ul>
-```
