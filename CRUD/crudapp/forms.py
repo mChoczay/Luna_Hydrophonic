@@ -43,3 +43,9 @@ class UpdateSystemForm(forms.ModelForm):
         fields = ["name", "description", "ph", "water_temperature", "TDS"]
 
 
+class SensorForm(forms.Form):
+    user_id = forms.IntegerField()
+    system_id = forms.IntegerField()
+    ph = forms.FloatField()
+    water_temperature = forms.FloatField()
+    TDS = forms.FloatField()
