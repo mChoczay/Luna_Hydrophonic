@@ -55,7 +55,7 @@ create table sensors (
     <h6> Updates an existing hydroponic system. </h6>
     <h5 style="color:green;"> /system/pk </h5>
     <h6> Renders the details of a hydroponic system. </h6>
-    <h5 style="color:green;"> /delete/pk </h5>
+    <mark><h5 style="color:green;"> /delete/pk </h5></mark>
     <h6> Deletes an existing hydroponic system. </h6>
     <h5> /logout </h5>
     <h6> Logs out the current user. </h6>
