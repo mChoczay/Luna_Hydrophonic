@@ -16,5 +16,7 @@ urlpatterns = [
     path('system/<int:pk>', views.view_system, name="view"),
     path('delete/<int:pk>', views.delete_system, name="delete"),
 
+    # - Stream
+    path('listener', views.listener, name="listener"),
 
 ]
